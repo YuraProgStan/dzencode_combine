@@ -1,7 +1,7 @@
 
 import React from 'react';
 import CommentsTable from '../components/CommentsTable';
-import { CommentSortBy, SortOrderPage } from "../constansts";
+import { CommentSortBy, SortOrderPage } from '../constansts';
 const MainPage = () => {
     const itemPerPage = 25;
 

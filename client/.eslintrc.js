@@ -21,6 +21,6 @@ module.exports = {
     ],
     rules: {
         "object-curly-spacing": ["error", "always"],
-        // "quotes": ["error", "double"],
+        "quotes": ["error", "single"],
     },
 };

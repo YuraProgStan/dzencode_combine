@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useMutation } from "@apollo/client";
-import { SIGN_IN } from "../graphql/mutations";
-import { useNavigate } from "react-router-dom";
-import SignInInput from "../validation/signIn";
+import { useMutation } from '@apollo/client';
+import { SIGN_IN } from '../graphql/mutations';
+import { useNavigate } from 'react-router-dom';
+import SignInInput from '../validation/signIn';
 
 const SignInForm = () => {
     const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ const SignInForm = () => {
         onCompleted: (data) => {
             if (data.signIn.access_token) {
                 localStorage.setItem('token', data.signIn.access_token);
-                navigate("/");
+                navigate('/');
             }
         },
         onError: (error) => {
@@ -46,41 +46,41 @@ const SignInForm = () => {
     };
 
     return (
-        <div className="popup-container">
+        <div className='popup-container'>
             <h2>Sign In</h2>
             <form onSubmit={handleSubmit}>
-                {validationError && <p className="p_error" >{validationError}</p>}
+                {validationError && <p className='p_error' >{validationError}</p>}
                 <div>
                     <label>Email:</label>
                     <input
-                        type="email"
+                        type='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="popup-input"
+                        className='popup-input'
                     />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <div className="password-container">
+                    <div className='password-container'>
                         <input
-                            type={showPassword ? "text" : "password"} // Toggle input type
+                            type={showPassword ? 'text' : 'password'} // Toggle input type
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="popup-input"
+                            className='popup-input'
                         />
                     </div>
                     <label>
                         <input
-                            type="checkbox"
+                            type='checkbox'
                             checked={showPassword}
                             onChange={() => setShowPassword(!showPassword)}
                         />
                         Show Password
                     </label>
                 </div>
-                <button type="submit" className="popup-button">Sign In</button>
+                <button type='submit' className='popup-button'>Sign In</button>
             </form>
         </div>
     );

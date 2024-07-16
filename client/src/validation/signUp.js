@@ -1,4 +1,4 @@
-import { REGEX, MESSAGES } from "./utils";
+import { REGEX, MESSAGES } from './utils';
 
 class CreateUserInput {
     constructor({

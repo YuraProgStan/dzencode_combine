@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useQuery, useSubscription } from "@apollo/client";
-import PropTypes from "prop-types";
-import CommentRow from "./CommentRow";
-import CommentFormPopup from "./CommentFormPopup";
-import { GET_COMMENTS } from "../graphql/queries";
-import { COMMENTS_SUBSCRIPTION } from "../graphql/subscriptions";
+import React, { useEffect, useState } from 'react';
+import { useQuery, useSubscription } from '@apollo/client';
+import PropTypes from 'prop-types';
+import CommentRow from './CommentRow';
+import CommentFormPopup from './CommentFormPopup';
+import { GET_COMMENTS } from '../graphql/queries';
+import { COMMENTS_SUBSCRIPTION } from '../graphql/subscriptions';
 import { CommentSortBy, SortOrderPage } from '../constansts';
 import { v4 as uuidv4 } from 'uuid';
 function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) {
@@ -137,7 +137,7 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
 
 
     const headerClass = (field) => {
-        return sortBy === field ? `active ${sortOrder.toLowerCase()}` : "";
+        return sortBy === field ? `active ${sortOrder.toLowerCase()}` : '';
     };
 
 
@@ -156,7 +156,7 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
     };
 
     return (
-        <div className="container">
+        <div className='container'>
             <button onClick={() => {
                 setShowPopup(true);
                 setCommentId(null); // For new root comments
@@ -165,7 +165,7 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
             </button>
             {comments.length > 0 ? (
                 <>
-                    <div className="wrapper">
+                    <div className='wrapper'>
                         <table>
                             <thead>
                             <tr>
@@ -174,16 +174,16 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
                                     className={`header-default ${headerClass(CommentSortBy.USERNAME)}`}
                                 >
                                     User Name {sortBy === CommentSortBy.USERNAME && (
-                                    sortOrder === SortOrderPage.ASC ? <span className="up-arrow"></span> :
-                                        <span className="down-arrow"></span>
+                                    sortOrder === SortOrderPage.ASC ? <span className='up-arrow'></span> :
+                                        <span className='down-arrow'></span>
                                 )}
                                 </th>
                                 <th
                                     onClick={() => handleSort(CommentSortBy.EMAIL)}
                                     className={`header-default ${headerClass(CommentSortBy.EMAIL)}`}>
                                     Email {sortBy === CommentSortBy.EMAIL && (
-                                    sortOrder === SortOrderPage.ASC ? <span className="up-arrow"></span> :
-                                        <span className="down-arrow"></span>
+                                    sortOrder === SortOrderPage.ASC ? <span className='up-arrow'></span> :
+                                        <span className='down-arrow'></span>
                                 )}
                                 </th>
                                 <th colSpan={4}
@@ -191,13 +191,13 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
                                     className={headerClass(CommentSortBy.CREATED_AT)}
                                 >
                                     Published Date {sortBy === CommentSortBy.CREATED_AT && (
-                                    sortOrder === SortOrderPage.ASC ? <span className="up-arrow"></span> :
-                                        <span className="down-arrow"></span>
+                                    sortOrder === SortOrderPage.ASC ? <span className='up-arrow'></span> :
+                                        <span className='down-arrow'></span>
                                 )}
                                 </th>
                             </tr>
                             </thead>
-                            <tbody className="root_tbody">
+                            <tbody className='root_tbody'>
                             {comments.map((comment) => (
                                 <CommentRow
                                     key={uuidv4()}
@@ -233,7 +233,7 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
 
 {
     showPopup && (
-        <div className="modal">
+        <div className='modal'>
             <CommentFormPopup onClose={() => setShowPopup(false)} parentId={commentId} />
                 </div>
 
@@ -244,7 +244,7 @@ function CommentsTable({ initialSortBy, initialSortOrder, initialPage, limit }) 
 
 CommentsTable.propTypes = {
     initialSortBy: PropTypes.string.isRequired,
-    initialSortOrder: PropTypes.oneOf(["ASC", "DESC"]).isRequired,
+    initialSortOrder: PropTypes.oneOf(['ASC', 'DESC']).isRequired,
     initialPage: PropTypes.number.isRequired,
     limit: PropTypes.number.isRequired,
 };

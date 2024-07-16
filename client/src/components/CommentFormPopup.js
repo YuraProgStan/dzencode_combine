@@ -7,11 +7,11 @@ import ReCAPTCHA from 'react-google-recaptcha';
 const recaptchaKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 function CommentFormPopup({ onClose, parentId = null }) {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [homepage, setHomepage] = useState("");
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [homepage, setHomepage] = useState('');
     const [captcha, setCaptcha] = useState(null);
-    const [text, setText] = useState("");
+    const [text, setText] = useState('');
     const [file, setFile] = useState(null);
     const [validationError, setValidationError] = useState(null);
 
@@ -67,50 +67,50 @@ function CommentFormPopup({ onClose, parentId = null }) {
         setCaptcha(value);
     }
     return (
-        <div className="popup">
+        <div className='popup'>
             <h2>Create Post</h2>
-            <span className="close" onClick={onClose}>&times;</span>
+            <span className='close' onClick={onClose}>&times;</span>
             <form onSubmit={handleSubmit}>
-                {validationError && <p className="p_error" >{validationError}</p>}
+                {validationError && <p className='p_error' >{validationError}</p>}
                 <label>Username:</label>
                 <input
-                    type="text"
+                    type='text'
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    className="popup-input"
+                    className='popup-input'
                 />
                 <label>Email:</label>
                 <input
-                    type="email"
+                    type='email'
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="popup-input"
+                    className='popup-input'
                 />
                 <label>Homepage:</label>
                 <input
-                    type="text"
+                    type='text'
                     value={homepage}
                     onChange={(e) => setHomepage(e.target.value)}
-                    className="popup-input"
+                    className='popup-input'
                 />
                 <label>Text:</label>
                 <textarea
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     required
-                    className="popup-input"
+                    className='popup-input'
                 />
                 <label>File:</label>
                 <input
-                    type="file"
+                    type='file'
                     onChange={handleFileChange}
-                    accept="image/*, .jpg, .gif, .png, .txt"
-                    className="popup-input"
+                    accept='image/*, .jpg, .gif, .png, .txt'
+                    className='popup-input'
                 />
-                <button type="submit" disabled={loading} className="popup-button">
-                    {loading ? "Posting..." : "Post Comment"}
+                <button type='submit' disabled={loading} className='popup-button'>
+                    {loading ? 'Posting...' : 'Post Comment'}
                 </button>
                 <ReCAPTCHA
                     sitekey={recaptchaKey}

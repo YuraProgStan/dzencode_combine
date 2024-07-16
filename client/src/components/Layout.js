@@ -1,6 +1,6 @@
 import React from 'react';
 import MainNavigation from './MainNavigation';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 const Layout = ({ children }) => {
     return (

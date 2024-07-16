@@ -1,4 +1,4 @@
-
+/* Base styles */
 * {
     font-size: 18px;
     box-sizing: border-box;
@@ -55,7 +55,8 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin:0;
-    }
+}
+
 .wrapper {
     overflow: auto;
     border-radius: 5px;
@@ -84,16 +85,13 @@ th, td {
     padding: 10px;
     text-align: left;
 }
-/*th{*/
-/*    border: 1px solid #2F496E;*/
-/*    */
-/*}*/
 
-.header_tr> td {
+.header_tr > td {
     background-color: #e7d9c7;
     padding: 0 0.5em;
 }
-td{
+
+td {
     border-left: 0;
     border-right: 0;
 }
@@ -106,8 +104,7 @@ th {
     font-size: 18px;
 }
 
-
-.header-default, tr:nth-child(1), tr:nth-child(2){
+.header-default, tr:nth-child(1), tr:nth-child(2) {
     width: 20%;
 }
 
@@ -116,7 +113,7 @@ td {
     color: #000;
 }
 
-.column_button_reply{
+.column_button_reply {
     width: 2em;
 }
 
@@ -140,11 +137,11 @@ td {
     display: inline-block; /* Show arrows only when active */
 }
 
-
 .up-arrow {
     border-bottom: 0.5em solid #F4EADE;
     border-top: 0;
 }
+
 .down-arrow {
     border-top: 0.5em solid #F4EADE;
     border-bottom: 0;
@@ -155,6 +152,7 @@ td {
     font-weight: bold;
     cursor: pointer;
 }
+
 .modal {
     display: flex;
     justify-content: center;
@@ -178,7 +176,6 @@ td {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     animation: zoom-in-zoom-out 1s;
 }
-
 
 .modal-content img {
     width: 100%; /* Adjust width as needed */
@@ -294,18 +291,70 @@ td {
     background-color: #015d90;
 }
 
-label{
+label {
     font-size: 16px;
 }
 
-.txt_viewer{
+.txt_viewer {
     padding: 10px;
 }
 
-.p_error{
-    color:red;
+.p_error {
+    color: red;
     font-size: 12px;
 }
+
 button:disabled {
     cursor: not-allowed !important;
+}
+
+/* Mobile-specific styles */
+@media (max-width: 600px) {
+    * {
+        font-size: 16px;
+    }
+
+    .menu {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    .modal-content {
+        width: 80%;
+    }
+
+    .popup {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .popup-input {
+        font-size: 14px;
+    }
+
+    .popup-button {
+        padding: 8px 16px;
+    }
+
+    label {
+        font-size: 14px;
+    }
 }

@@ -1,16 +1,14 @@
-import { ApolloClient, InMemoryCache, createHttpLink, split } from "@apollo/client";
-import { WebSocketLink } from "@apollo/client/link/ws";
-import { onError } from "@apollo/client/link/error";
-import { setContext } from "@apollo/client/link/context";
-import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
-import { getMainDefinition } from "@apollo/client/utilities";
+import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
+import { getMainDefinition } from '@apollo/client/utilities';
 
-// HTTP link for regular GraphQL operations
 const httpLink = createHttpLink({
     uri: process.env.REACT_APP_API_HTTP_URI
 });
 
-// Upload link for handling multipart form data
 const uploadLink = createUploadLink({
     uri: process.env.REACT_APP_API_HTTP_URI,
     headers: {
@@ -37,7 +35,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : "",
+            authorization: token ? `Bearer ${token}` : '',
         }
     };
 });
@@ -59,8 +57,8 @@ const link = split(
     ({ query }) => {
         const definition = getMainDefinition(query);
         return (
-            definition.kind === "OperationDefinition" &&
-            definition.operation === "subscription"
+            definition.kind === 'OperationDefinition' &&
+            definition.operation === 'subscription'
         );
     },
     wsLink,
