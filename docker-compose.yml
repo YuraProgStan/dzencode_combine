@@ -11,8 +11,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: rootroot
       POSTGRES_DB: test_dzencode
-#    volumes:
-#      - postgres-data:/var/lib/postgresql/data
     command: [ "postgres", "-c", "fsync=off" ]
     ports:
       - "5432:5432"
