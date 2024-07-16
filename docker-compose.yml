@@ -45,11 +45,6 @@ services:
       - ./definitions.json:/etc/rabbitmq/definitions.json:ro
     networks:
       - app-network
-#    healthcheck:
-#      test: [ "CMD", "rabbitmqctl", "status" ]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 5
 
   redis:
     image: redis:alpine
@@ -65,7 +60,7 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - api/.env.dev
+      - api/.env
     depends_on:
       - redis
       - postgres
