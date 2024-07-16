@@ -27,7 +27,6 @@ export class ValidationCommentPipe implements PipeTransform {
       return value;
     }
     const { file, username, email, captcha } = value;
-    console.log("file")
     const isCaptchaValid = await this.validateCaptcha(captcha);
     if (!isCaptchaValid) {
       this.logger.error('reCAPTCHA validation failed.');
@@ -37,7 +36,7 @@ export class ValidationCommentPipe implements PipeTransform {
     const currentUser = this.getCurrentUser() as CurrentUserType;
 
     await this.validateUser(username, email, currentUser.id);
-    if (file !== undefined && file !== null){
+    if (file !== undefined && file !== null) {
       await this.fileValidate(file);
     }
     this.setCurrentUser(null);

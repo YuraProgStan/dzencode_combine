@@ -7,7 +7,7 @@ import { PostCommentInput } from './dto/post-comment.dto';
 import { IMAGE_DIMENSION_HIGH, IMAGE_DIMENSION_WITH } from '../constants';
 import { cropImageToCenter } from '../utils/crop-image';
 import { UserInputError } from '@nestjs/apollo';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { editFileName } from '../utils/edit.file.name';
 import { FileUploadAwsService } from '../fileupload-aws/fileupload-aws.service';
 import { FileUpload } from 'graphql-upload-ts';
@@ -83,7 +83,7 @@ export class CommentService {
     }
 
     const createdFileName = this.createFileName(filename, type);
-    // Upload file to AWS and get URL
+
     return this.fileUploadAwsService.uploadFile(
       processedFileBuffer,
       createdFileName,

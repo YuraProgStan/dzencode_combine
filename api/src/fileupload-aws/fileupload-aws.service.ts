@@ -30,6 +30,7 @@ export class FileUploadAwsService {
     try {
       uploadResult = await this.s3.upload(params).promise();
     } catch (error) {
+      this.logger.error('File upload failed', error);
       throw new ApolloError('File upload failed', (error as any).message);
     }
 

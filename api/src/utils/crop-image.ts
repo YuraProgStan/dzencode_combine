@@ -1,4 +1,4 @@
-import sharp from 'sharp';
+import * as sharp from 'sharp';
 import { Buffer } from 'buffer';
 import { IMAGE_DIMENSION_HIGH, IMAGE_DIMENSION_WITH } from '../constants';
 
