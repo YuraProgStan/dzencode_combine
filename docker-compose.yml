@@ -1,0 +1,117 @@
+version: '3.9'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  postgres:
+    image: postgres:14.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rootroot
+      POSTGRES_DB: test_dzencode
+#    volumes:
+#      - postgres-data:/var/lib/postgresql/data
+    command: [ "postgres", "-c", "fsync=off" ]
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    environment:
+      - discovery.type=single-node
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=elastic_password
+      - ELASTICSEARCH_INDEX_NAME=comment
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"       # RabbitMQ messaging port
+      - "15672:15672"     # RabbitMQ management UI port
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./definitions.json:/etc/rabbitmq/definitions.json:ro
+    networks:
+      - app-network
+#    healthcheck:
+#      test: [ "CMD", "rabbitmqctl", "status" ]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    env_file:
+      - api/.env
+    depends_on:
+      - redis
+      - postgres
+      - elasticsearch
+      - rabbitmq
+    networks:
+      - app-network
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - client/.env
+    networks:
+      - app-network
+
+  consumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    env_file:
+      - consumer/.env
+    depends_on:
+      - postgres
+      - elasticsearch
+      - rabbitmq
+    networks:
+      - app-network
+
+  cerebro:
+    image: lmenezes/cerebro
+    environment:
+      - CEREBRO_HOST=http://elasticsearch:9200
+    ports:
+      - "9000:9000"
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:
+  esdata:
+  rabbitmq-data:

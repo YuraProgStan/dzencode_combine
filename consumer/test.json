@@ -1,0 +1,75 @@
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "nested_objects": {
+          "match_mapping_type": "object",
+          "mapping": {
+            "type": "nested"
+          }
+        }
+      }
+    ],
+    "properties": {
+      "text": { "type": "text" },
+      "userId": { "type": "integer" },
+      "parentId": { "type": "integer", "null_value": null },
+      "fileUrl": { "type": "keyword", "null_value": null },
+      "createdAt": { "type": "date" },
+      "updatedAt": { "type": "date" },
+      "user": {
+        "properties": {
+          "userId": { "type": "integer" },
+          "username": { "type": "text" },
+          "email": { "type": "text" },
+          "homePage": { "type": "keyword", "null_value": null }
+        }
+      },
+      "children": [
+        {
+          "type": "nested",
+          "properties": {
+            "text": {
+              "type": "text"
+            },
+            "userId": {
+              "type": "integer"
+            },
+            "parentId": {
+              "type": "integer",
+              "null_value": null
+            },
+            "fileUrl": {
+              "type": "keyword",
+              "null_value": null
+            },
+            "createdAt": {
+              "type": "date"
+            },
+            "updatedAt": {
+              "type": "date"
+            },
+            "user": {
+              "properties": {
+                "userId": {
+                  "type": "integer"
+                },
+                "username": {
+                  "type": "text"
+                },
+                "email": {
+                  "type": "text"
+                },
+                "homePage": {
+                  "type": "keyword",
+                  "null_value": null
+                }
+              }
+            },
+            "children": []
+          }
+        }
+      ]
+    }
+  }
+}

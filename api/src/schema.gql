@@ -1,0 +1,121 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Comment {
+  id: Int!
+  parent: Comment
+  children: [Comment]
+  user: User!
+  text: String!
+  fileUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: Int!
+  username: String!
+  email: String!
+  homepage: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  comments: [Comment!]
+}
+
+type AuthPayload {
+  access_token: String!
+}
+
+type ResponseComment {
+  message: String!
+  success: Boolean!
+}
+
+type UserResponse {
+  username: String!
+  email: String!
+  homepage: String
+}
+
+type ParentResponse {
+  id: Int!
+}
+
+type CommentsPaginationResponse {
+  id: Int!
+  user: UserResponse!
+  text: String!
+  createdAt: DateTime!
+  fileUrl: String
+  parent: ParentResponse
+  children: [CommentsPaginationResponse!]
+}
+
+type NewCommentSubscriptionResponse {
+  id: Int!
+  user: UserResponse!
+  text: String!
+  createdAt: DateTime!
+  fileUrl: String
+  parentId: Int
+}
+
+type Query {
+  comments(limit: Int! = 25, page: Int! = 1, sortBy: CommentSortBy! = CREATED_AT, sortOrder: String! = "DESC"): [CommentsPaginationResponse!]!
+}
+
+"""Comment Types"""
+enum CommentSortBy {
+  USERNAME
+  EMAIL
+  CREATED_AT
+}
+
+type Mutation {
+  signIn(signInInput: SignInInput!): AuthPayload!
+  signUp(createUserInput: CreateUserInput!): User
+  postComment(input: PostCommentInput!): ResponseComment!
+}
+
+input SignInInput {
+  email: String!
+
+  """password"""
+  password: String!
+}
+
+"""Create user object type."""
+input CreateUserInput {
+  """A new user name"""
+  username: String!
+
+  """A new user email"""
+  email: String!
+
+  """A new user password"""
+  password: String!
+}
+
+"""Create comment object type."""
+input PostCommentInput {
+  username: String!
+  email: String!
+  homepage: String
+  captcha: String!
+  text: String!
+  file: Upload
+  parentId: Int
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type Subscription {
+  newComments: [NewCommentSubscriptionResponse!]!
+}
