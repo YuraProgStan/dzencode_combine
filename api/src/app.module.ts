@@ -55,6 +55,7 @@ import { AppController } from './app.controller';
       playground: true,
       introspection: true,
       context: ({ req, res }) => ({ req, res }),
+      status400ForVariableCoercionErrors: true,
     }),
     AppElasticsearchModule,
     AuthModule,

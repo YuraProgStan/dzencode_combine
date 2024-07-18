@@ -21,7 +21,7 @@ class CreateUserInput {
         }
 
         if (!this.password.match(REGEX.PASSWORD_RULE)) {
-            throw new Error(MESSAGES.EMAIL_RULE_MESSAGE);
+            throw new Error(MESSAGES.PASSWORD_RULE_MESSAGE);
         }
 
 

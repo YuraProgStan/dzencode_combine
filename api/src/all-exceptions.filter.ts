@@ -6,7 +6,11 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { GqlArgumentsHost, GqlContextType } from '@nestjs/graphql';
-import { ApolloError } from 'apollo-server-express';
+import {
+  ApolloError,
+  AuthenticationError,
+  UserInputError,
+} from 'apollo-server-express';
 import { LoggerService } from './logger/logger.service';
 import { stringify } from 'flatted';
 
@@ -28,10 +32,16 @@ export class AllExceptionsFilter implements ExceptionFilter {
         stringify(gqlContext, null, 2),
       );
 
-      let formattedError;
+      let formattedError: ApolloError;
       if (exception instanceof ApolloError) {
         this.loggerService.error('ApolloError:', exception);
         formattedError = exception;
+      } else if (exception instanceof AuthenticationError) {
+        this.loggerService.error('AuthenticationError:', exception);
+        formattedError = new ApolloError('Unauthorized', '401');
+      } else if (exception instanceof UserInputError) {
+        this.loggerService.error('UserInputError:', exception);
+        formattedError = new ApolloError('Bad Request', '400');
       } else if (exception instanceof HttpException) {
         const response = exception.getResponse();
         const status = exception.getStatus();

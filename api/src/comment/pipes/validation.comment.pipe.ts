@@ -8,6 +8,7 @@ import { PostCommentInput } from '../dto/post-comment.dto';
 import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { LoggerService } from '../../logger/logger.service';
+import { ApolloError, AuthenticationError } from 'apollo-server-express';
 
 @Injectable()
 export class ValidationCommentPipe implements PipeTransform {
@@ -45,19 +46,25 @@ export class ValidationCommentPipe implements PipeTransform {
   }
 
   private async validateUser(username: string, email: string, id: number) {
-    const isUserValid = await this.userService.validateUser({
-      username,
-      email,
-      id,
-    });
+    try {
+      const isUserValid = await this.userService.validateUser({
+        username,
+        email,
+        id,
+      });
 
-    if (!isUserValid) {
-      this.logger.error(
-        'User email or username not valid for current user. Sign in first.',
-      );
-      throw new UserInputError(
-        'User email or username not valid for current user. Sign in first.',
-      );
+      if (!isUserValid) {
+        throw new AuthenticationError(
+          'User email or username not valid for current user. Sign in first.',
+        );
+      }
+    } catch (error) {
+      if (error instanceof AuthenticationError) {
+        this.logger.error(error.message);
+        throw error;
+      }
+      this.logger.error('Unexpected error during user validation', error);
+      throw new ApolloError('Failed to validate user', 'USER_VALIDATION_ERROR');
     }
   }
 

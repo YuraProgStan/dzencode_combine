@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from './user.repository';
 import * as bcrypt from 'bcrypt';
-import { UserInputError } from '@nestjs/apollo';
 import { User } from './entities/user.entity';
 import { ApolloError } from 'apollo-server-express';
 
@@ -28,18 +27,17 @@ export class UserService {
     return this.userRepository.existUser(username, email);
   }
 
-  public async validateUser({ username, email, id }): Promise<boolean> {
-    try {
-      const user = await this.userRepository.getUserById(id);
-      if (user && user.username === username && user.email === email) {
-        return true;
-      }
-      throw new UserInputError(
-        'User email or username not valid for current user. Sign in first.',
-      );
-    } catch (error) {
-      throw new ApolloError('Failed to validate user', 'USER_VALIDATION_ERROR');
-    }
+  public async validateUser({
+    username,
+    email,
+    id,
+  }: {
+    username: string;
+    email: string;
+    id: number;
+  }): Promise<boolean> {
+    const user = await this.userRepository.getUserById(id);
+    return user && user.username === username && user.email === email;
   }
 
   public async getUsersByIds(userIds): Promise<User[]> {
