@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useMutation } from '@apollo/client';
 import { POST_COMMENT } from '../graphql/mutations';
 import PropTypes from 'prop-types';
@@ -66,12 +66,31 @@ function CommentFormPopup({ onClose, parentId = null }) {
     const handleCaptchaChange = (value) => {
         setCaptcha(value);
     }
+
+    const insertTag = (tag) => {
+        const start = textareaRef.current.selectionStart;
+        const end = textareaRef.current.selectionEnd;
+        const selectedText = text.substring(start, end);
+
+        let tagText;
+        if (tag === 'a') {
+            tagText = `<a href="#" target="_blank">${selectedText}</a>`;
+        } else {
+            tagText = `<${tag}>${selectedText}</${tag}>`;
+        }
+
+        const newText = `${text.substring(0, start)}${tagText}${text.substring(end)}`;
+        setText(newText);
+    };
+
+    const textareaRef = useRef(null);
+
     return (
         <div className='popup'>
             <h2>Create Post</h2>
             <span className='close' onClick={onClose}>&times;</span>
             <form onSubmit={handleSubmit}>
-                {validationError && <p className='p_error' >{validationError}</p>}
+                {validationError && <p className='p_error'>{validationError}</p>}
                 <label>Username:</label>
                 <input
                     type='text'
@@ -96,12 +115,27 @@ function CommentFormPopup({ onClose, parentId = null }) {
                     className='popup-input'
                 />
                 <label>Text:</label>
-                <textarea
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                    required
-                    className='popup-input'
-                />
+                <div className='text-editor'>
+                    <button type='button' onClick={() => insertTag('i')}>
+                        <i>[i]</i>
+                    </button>
+                    <button type='button' onClick={() => insertTag('strong')}>
+                        <strong>[strong]</strong>
+                    </button>
+                    <button type='button' onClick={() => insertTag('code')}>
+                        <code>[code]</code>
+                    </button>
+                    <button type='button' onClick={() => insertTag('a')}>
+                        <a>[a]</a>
+                    </button>
+                    <textarea
+                        ref={textareaRef}
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        required
+                        className='popup-input'
+                    />
+                </div>
                 <label>File:</label>
                 <input
                     type='file'
@@ -109,13 +143,13 @@ function CommentFormPopup({ onClose, parentId = null }) {
                     accept='image/*, .jpg, .gif, .png, .txt'
                     className='popup-input'
                 />
-                <button type='submit' disabled={loading} className='popup-button'>
-                    {loading ? 'Posting...' : 'Post Comment'}
-                </button>
                 <ReCAPTCHA
                     sitekey={recaptchaKey}
                     onChange={handleCaptchaChange} // Handle reCAPTCHA token
                 />
+                <button type='submit' disabled={loading} className='popup-button'>
+                    {loading ? 'Posting...' : 'Post Comment'}
+                </button>
             </form>
         </div>
     );

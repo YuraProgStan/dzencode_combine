@@ -2,7 +2,7 @@ const USERNAME_RULE = /^[a-zA-Z0-9]+$/;
 const HOME_URL_RULE = /^(https?):\/\/[^\s/$.?#].[^\s]*$/;
 
 const PASSWORD_RULE = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-const TEXT_RULE = /^(?:(<(a|code|i|strong)(\s+[^>]*|)>.*?<\/\2>)|([^<]+))$/;
+const TEXT_RULE = /^(?:(<(a|code|i|strong)(\s+[^>]*|)>[\s\S]*?<\/\2>)|([^<]+))*$/;
 const ALLOWED_FILE_EXTENSIONS = /jpg|jpeg|gif|png|txt/;
 const EMAIL_RULE = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/;
 const CAPTCHA_RULE = /^[a-zA-Z0-9_-]+$/;

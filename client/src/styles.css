@@ -308,6 +308,25 @@ button:disabled {
     cursor: not-allowed !important;
 }
 
+pre {
+    background-color: #000;
+    font-family: arial sans-serif;
+    padding: 2px 4px;
+    border-radius: 3px;
+    color: #2988BC;
+}
+
+.text-editor button{
+    font-family: arial sans-serif;
+    background-color: #eee;
+    color: #2F496E;
+    padding: 4px 8px;
+    border: 1px solid #ddd;
+}
+
+.text-editor button:hover{
+    background-color: #ddd;
+}
 /* Mobile-specific styles */
 @media (max-width: 600px) {
     * {

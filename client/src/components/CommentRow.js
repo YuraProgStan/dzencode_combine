@@ -6,6 +6,7 @@ import txtIcon from '../images/txt.png';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import DOMPurify from 'dompurify';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -14,6 +15,11 @@ function CommentRow({ comment }) {
     const [showModal, setShowModal] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [fileType, setFileType] = useState(null);
+    const formattedText = comment.text
+        .replace(/\n/g, '<br>')
+        .replace(/<code>/g, '<pre><code>')
+        .replace(/<\/code>/g, '</code></pre>');
+    const sanitizedHTML = DOMPurify.sanitize(formattedText);
 
     const openModal = (fileUrl) => {
         setSelectedFile(fileUrl);
@@ -50,7 +56,7 @@ function CommentRow({ comment }) {
                 </td>
             </tr>
             <tr>
-                <td colSpan={4}>{comment.text}</td>
+                <td colSpan={4} dangerouslySetInnerHTML={{ __html: sanitizedHTML }}/>
                 <td>
                     {comment.fileUrl && (
                         <>

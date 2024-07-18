@@ -3,7 +3,8 @@ import { MAX_FILE_SIZE } from '../constants';
 const USERNAME_RULE = /^[a-zA-Z0-9]+$/;
 const CAPTCHA_RULE = /^[a-zA-Z0-9_-]+$/;
 const HOME_URL_RULE = /^(https?):\/\/[^\s/$.?#].[^\s]*$/;
-const TEXT_RULE = /^(?:(<(a|code|i|strong)(\s+[^>]*|)>.*?<\/\2>)|([^<]+))$/;
+const TEXT_RULE =
+  /^(?:(<(a|code|i|strong)(\s+[^>]*|)>[\s\S]*?<\/\2>)|([^<]+))*$/;
 const ALLOWED_FILE_EXTENSIONS = /jpg|jpeg|gif|png|txt/;
 
 export const REGEX = {

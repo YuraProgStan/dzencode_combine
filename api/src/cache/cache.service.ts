@@ -12,7 +12,7 @@ export class CacheService {
     private readonly cacheManager: Cache,
     private readonly configService: ConfigService,
   ) {
-    this.defaultTTL = parseInt(this.configService.get('REDIS_TTL'), 10) || 20000;
+    this.defaultTTL = parseInt(this.configService.get('REDIS_TTL'), 10) || 20;
   }
 
   async get(key: string): Promise<any> {
